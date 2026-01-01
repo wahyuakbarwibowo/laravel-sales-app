@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Payments extends Model
 {
+    use HasFactory;
     protected $fillable = [
-        'payment_code',
+        'code',
+        'sale_id',
         'payment_date',
         'amount',
+    ];
+
+    protected $casts = [
+        'payment_date' => 'date',
+        'amount' => 'decimal:2',
     ];
 
     public function sales()
@@ -19,8 +27,12 @@ class Payments extends Model
 
     public static function generateCode()
     {
-        return 'PY-' . now()->format('Ymd') . '-' . str_pad(
-            Self::count() + 1, 5, '0', STR_PAD_LEFT
-        );
+        $last = self::whereDate('created_at', today())
+            ->orderByDesc('id')
+            ->first();
+
+        $number = $last ? intval(substr($last->code, -4)) + 1 : 1;
+
+        return 'PB-' . now()->format('Ymd') . '-' . str_pad($number, 4, '0', STR_PAD_LEFT);
     }
 }

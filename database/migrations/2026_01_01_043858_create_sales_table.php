@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('sale_code')->unique();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('code')->unique();
             $table->date('sale_date');
             $table->integer('total_qty')->default(0);
-            $table->decimal('total_price', 15, 2)->default(0);
+            $table->decimal('total_amount', 15, 2)->default(0);
             $table->enum('status', [
                 'BELUM_DIBAYAR',
                 'BELUM_DIBAYAR_SEPENUHNYA',
