@@ -1,5 +1,6 @@
 import { InertiaLinkProps } from '@inertiajs/react';
 import { LucideIcon } from 'lucide-react';
+import { Page } from '@inertiajs/core'
 
 export interface Auth {
     user: User;
@@ -40,4 +41,40 @@ export interface User {
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Item {
+    id: number
+    name: string
+    price: number
+}
+
+export interface SaleItemForm {
+    item_id: number | '',
+    qty: number
+    price: number
+    total_price: number
+}
+
+export interface PageProps<T = {}> extends Page<T> {
+    auth: {
+        user: User
+    },
+    items: Item[],
+    sale: Sale,
+}
+
+export interface SaleItem {
+    item_id: number
+    qty: number
+    price: number
+    total_price: number
+}
+
+export interface Sale {
+    id: number
+    code: string
+    sale_date: string
+    status: string
+    items: SaleItem[]
 }
