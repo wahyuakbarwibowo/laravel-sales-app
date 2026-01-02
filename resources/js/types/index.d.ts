@@ -56,7 +56,7 @@ export interface SaleItemForm {
     total_price: number
 }
 
-export interface PageProps<T = {}> extends Page<T> {
+export interface PageProps<T = object> extends Page<T> {
     auth: {
         user: User
     },
