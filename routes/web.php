@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('payments', PaymentController::class);
 
     Route::prefix('master')->name('master.')->group(function () {
-        
+        Route::resource('items', ItemController::class);
     });
 });
 

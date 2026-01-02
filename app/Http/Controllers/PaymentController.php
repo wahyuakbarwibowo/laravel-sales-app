@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payments;
 use App\Models\Sales;
+use App\SaleStatus;
 use DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,7 +20,7 @@ class PaymentController extends Controller
             ->orderByDesc('payment_date')
             ->paginate(10);
 
-        return Inertia::render('Payment/Index', [
+        return Inertia::render('payment/index', [
             'payment' => $payment,
             'filters' => $request->only('from', 'to'),
         ]);
@@ -27,7 +28,7 @@ class PaymentController extends Controller
 
     public function create()
     {
-        return Inertia::render('Payment/Create', [
+        return Inertia::render('payment/create', [
             'sales' => Sales::whereIn('status', [
                 'BELUM_DIBAYAR',
                 'BELUM_DIBAYAR_SEPENUHNYA',
@@ -70,14 +71,14 @@ class PaymentController extends Controller
     {
         $payment->load('sale');
 
-        return Inertia::render('Payment/Show', [
+        return Inertia::render('payment/show', [
             'payment' => $payment
         ]);
     }
 
     public function edit(Payments $payment)
     {
-        return Inertia::render('Payment/Edit', [
+        return Inertia::render('payment/edit', [
             'payment' => $payment,
         ]);
     }
@@ -128,11 +129,11 @@ class PaymentController extends Controller
         $totalPaid = $sale->payments()->sum('amount');
 
         if ($totalPaid == 0) {
-            $sale->status = 'BELUM_DIBAYAR';
+            $sale->status = SaleStatus::BELUM_DIBAYAR;
         } elseif ($totalPaid < $sale->total_amount) {
-            $sale->status = 'BELUM_DIBAYAR_SEPENUHNYA';
+            $sale->status = SaleStatus::BELUM_DIBAYAR_SEPENUHNYA;
         } else {
-            $sale->status = 'SUDAH_DIBAYAR';
+            $sale->status = SaleStatus::SUDAH_DIBAYAR;
         }
 
         $sale->save();
