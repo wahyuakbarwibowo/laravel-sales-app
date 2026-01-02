@@ -13,14 +13,26 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpen, DollarSign, Folder, LayoutGrid, ShoppingBag } from 'lucide-react';
 import AppLogo from './app-logo';
+import sales from "@/routes/sales";
+import payments from "@/routes/payments";
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Penjualan',
+        href: sales.index.url(),
+        icon: ShoppingBag,
+    },
+    {
+        title: 'Pembayaran',
+        href: payments.index.url(),
+        icon: DollarSign,
     },
 ];
 

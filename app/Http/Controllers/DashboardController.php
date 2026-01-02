@@ -40,7 +40,7 @@ class DashboardController extends Controller
             ->orderByDesc('total_qty')
             ->get();
 
-        return Inertia::render('dashboard/index', [
+        return Inertia::render('dashboard', [
             'filters' => compact('from', 'to'),
             'widgets' => [
                 'transactions' => $totalTransactions,
