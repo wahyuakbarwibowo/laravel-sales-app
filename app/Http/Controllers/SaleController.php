@@ -31,7 +31,7 @@ class SaleController extends Controller
     {
         return Inertia::render('sales/create', [
             'items' => Items::all(),
-            'sale_code' => Sales::generateCode(),
+            'code' => Sales::generateCode(),
         ]);
     }
 
@@ -55,7 +55,7 @@ class SaleController extends Controller
             }
 
             $sale = Sales::create([
-                'sale_code' => Sales::generateCode(),
+                'code' => Sales::generateCode(),
                 'user_id' => auth()->id(),
                 'sale_date' => $request->sale_date,
                 'total_amount' => $totalAmount,

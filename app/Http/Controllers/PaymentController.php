@@ -30,10 +30,10 @@ class PaymentController extends Controller
     {
         return Inertia::render('payment/create', [
             'sales' => Sales::whereIn('status', [
-                'BELUM_DIBAYAR',
-                'BELUM_DIBAYAR_SEPENUHNYA',
+                SaleStatus::BELUM_DIBAYAR,
+                SaleStatus::BELUM_DIBAYAR_SEPENUHNYA,
             ])->get(),
-            'payment_code' => Payments::generateCode(),
+            'code' => Payments::generateCode(),
         ]);
     }
 
@@ -55,7 +55,7 @@ class PaymentController extends Controller
             }
 
             Payments::create([
-                'payment_code' => Payments::generateCode(),
+                'code' => Payments::generateCode(),
                 'sale_id' => $sale->id,
                 'payment_date' => $request->payment_date,
                 'amount' => $request->amount,

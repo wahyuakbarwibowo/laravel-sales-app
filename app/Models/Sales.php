@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\SaleStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,11 +49,11 @@ class Sales extends Model
         $totalPaid = $this->total_paid;
 
         if ($totalPaid == 0) {
-            $this->status = 'BELUM_DIBAYAR';
+            $this->status = SaleStatus::BELUM_DIBAYAR;
         } elseif ($totalPaid < $this->total_amount) {
-            $this->status = 'BELUM_DIBAYAR_SEPENUHNYA';
+            $this->status = SaleStatus::BELUM_DIBAYAR_SEPENUHNYA;
         } else {
-            $this->status = 'SUDAH_DIBAYAR';
+            $this->status = SaleStatus::SUDAH_DIBAYAR;
         }
 
         $this->save();

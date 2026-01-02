@@ -129,7 +129,7 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
         </tbody>
       </table>
 
-      <button>
+      <button onClick={() => addRow()}>
         + Tambah Item
       </button>
 
