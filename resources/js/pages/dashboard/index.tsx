@@ -67,6 +67,21 @@ export default function Dashboard(
             </BarChart>
           </ResponsiveContainer>
         </div>
+
+        <div className="card">
+          <h2 className="font-semibold mb-2">
+            Qty Terjual per Item
+          </h2>
+
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={charts.qtyPerItem}>
+              <XAxis dataKey="item" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="total_qty" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   )

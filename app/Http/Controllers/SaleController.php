@@ -20,7 +20,7 @@ class SaleController extends Controller
             ->orderByDesc('sale_date')
             ->paginate(10);
 
-        return Inertia::render('Sales/Index', [
+        return Inertia::render('sales/index', [
             'sales' => $sales,
             'filters' => $request->only('from', 'to'),
         ]);
@@ -28,7 +28,7 @@ class SaleController extends Controller
 
     public function create()
     {
-        return Inertia::render('Sales/Create', [
+        return Inertia::render('sales/create', [
             'items' => Items::all(),
             'sale_code' => Sales::generateCode(),
         ]);
@@ -80,7 +80,7 @@ class SaleController extends Controller
     {
         $sale->load('items.item', 'payments');
 
-        return Inertia::render('Sales/Show', [
+        return Inertia::render('sales/show', [
             'sale' => $sale,
         ]);
     }
@@ -93,7 +93,7 @@ class SaleController extends Controller
 
         $sale->load('items');
 
-        return Inertia::render('Sales/Edit', [
+        return Inertia::render('sales/edit', [
             'sale' => $sale,
             'items' => Items::all(),
         ]);

@@ -62,6 +62,8 @@ export interface PageProps<T = object> extends Page<T> {
     },
     items: Item[],
     sale: Sale,
+    sales: SalePayment[],
+    payment: Payment
 }
 
 export interface SaleItem {
@@ -77,4 +79,21 @@ export interface Sale {
     sale_date: string
     status: string
     items: SaleItem[]
+}
+
+export interface SalePayment {
+    id: number
+    code: string
+    total_amount: number
+    total_paid: number
+    status: string
+}
+
+export interface Payment {
+    id: number
+    code: string
+    sale_id: number
+    payment_date: string
+    amount: number
+    sale: SalePayment
 }

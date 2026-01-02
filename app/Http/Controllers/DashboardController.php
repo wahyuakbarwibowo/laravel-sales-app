@@ -35,12 +35,12 @@ class DashboardController extends Controller
             items.name as item,
             SUM(qty) as total_qty
         ")
-            ->join('items', 'item.id', '=', 'sale_items.item_id')
+            ->join('items', 'items.id', '=', 'sale_items.item_id')
             ->groupBy('items.name')
             ->orderByDesc('total_qty')
             ->get();
 
-        return Inertia::render('Dashboard/Index', [
+        return Inertia::render('dashboard/index', [
             'filters' => compact('from', 'to'),
             'widgets' => [
                 'transactions' => $totalTransactions,
