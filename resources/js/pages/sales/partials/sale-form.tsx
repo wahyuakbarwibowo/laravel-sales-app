@@ -72,7 +72,7 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
             <th></th>
           </tr>
         </thead>
-        <body>
+        <tbody>
           {data.items.map((row, index) => (
             <tr key={index}>
               <td>
@@ -126,11 +126,11 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
               </td>
             </tr>
           ))}
-        </body>
+        </tbody>
       </table>
 
       <button>
-        ➕ Tambah Item
+        + Tambah Item
       </button>
 
       <div className="text-right font-bold">

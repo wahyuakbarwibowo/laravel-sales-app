@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Items;
 use App\Models\SaleItems;
 use App\Models\Sales;
+use App\SaleStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -87,7 +88,7 @@ class SaleController extends Controller
 
     public function edit(Sales $sale)
     {
-        if ($sale->status === 'SUDAH_DIBAYAR') {
+        if ($sale->status === SaleStatus::SUDAH_DIBAYAR) {
             abort(403, 'Penjualan sudah dibayar tidak bisa di-edit');
         }
 
@@ -101,7 +102,7 @@ class SaleController extends Controller
 
     public function update(Request $request, Sales $sale)
     {
-        if ($sale->status === 'SUDAH_DIBAYAR') {
+        if ($sale->status === SaleStatus::SUDAH_DIBAYAR) {
             abort(403);
         }
 
@@ -144,7 +145,7 @@ class SaleController extends Controller
 
     public function destroy(Sales $sale)
     {
-        if ($sale->status === 'SUDAH_DIBAYAR') {
+        if ($sale->status === SaleStatus::SUDAH_DIBAYAR) {
             abort(403);
         }
 

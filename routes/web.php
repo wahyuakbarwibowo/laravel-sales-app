@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('sales', SaleController::class)->except(['destroy']);
+    Route::resource('sales', SaleController::class);
 
     Route::resource('payments', PaymentController::class);
 

@@ -97,3 +97,8 @@ export interface Payment {
     amount: number
     sale: SalePayment
 }
+
+interface Pagination<T> {
+  data: T[]
+  links: any[]
+}
