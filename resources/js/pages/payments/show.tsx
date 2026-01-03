@@ -1,5 +1,6 @@
 import { PageProps, Payment } from '@/types'
 import { Button } from '@/components/ui/button'
+import payments from "@/routes/payments"
 
 export default function Show(
   { payment }: PageProps<{ payment: Payment }>
@@ -12,7 +13,7 @@ export default function Show(
         </h1>
 
         <Button asChild variant="secondary">
-          <a href={route('payments.index')}>
+          <a href={payments.index().url}>
             Kembali
           </a>
         </Button>
@@ -40,13 +41,6 @@ export default function Show(
             {payment.amount.toLocaleString('id-ID')}
           </span>
         </div>
-
-        {payment.note && (
-          <div className="pt-3 border-t">
-            <p className="text-muted-foreground text-sm mb-1">Catatan</p>
-            <p>{payment.note}</p>
-          </div>
-        )}
       </div>
     </>
   )

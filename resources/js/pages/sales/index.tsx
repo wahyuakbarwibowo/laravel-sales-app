@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout'
 import { PageProps } from '@/types'
 import { Link, router } from '@inertiajs/react'
 import * as salesRoute from "@/routes/sales"
+import { Button } from "@/components/ui/button"
 
 interface Props {
   sales: Pagination<Sale>
@@ -65,25 +66,25 @@ export default function Index(
                 <th>Tanggal</th>
                 <th>Total</th>
                 <th>Status</th>
-                <th className="text-right">Aksi</th>
+                <th className="text-center">Aksi</th>
               </tr>
             </thead>
 
             <tbody>
               {sales.data.map(sale => (
-                <tr key={sale.id}>
-                  <td>{sale.code}</td>
-                  <td>{sale.sale_date}</td>
-                  <td>
+                <tr key={sale.id} className="border-t">
+                  <td className="text-center">{sale.code}</td>
+                  <td className="text-center">{sale.sale_date}</td>
+                  <td className="text-center">
                     Rp {sale.total_amount.toLocaleString()}
                   </td>
-                  <td>
+                  <td className="text-center">
                     <StatusBadge status={sale.status} />
                   </td>
-                  <td className="text-right space-x-2">
+                  <td className="text-center space-x-2">
                     <Link
                       href={salesRoute.show({ sale: sale.id }).url}
-                      className="btn"
+                      className="bg-black p-1 text-white rounded-full"
                     >
                       Detail
                     </Link>
@@ -92,17 +93,17 @@ export default function Index(
                       <>
                         <Link
                           href={salesRoute.edit({ sale: sale.id }).url}
-                          className="btn"
+                          className="bg-black p-1 text-white rounded-full"
                         >
                           Edit
                         </Link>
 
-                        <button
+                        <Button
                           onClick={() => destroy(sale.id)}
-                          className="btn-danger"
+                          className="bg-black p-1 text-white rounded-full"
                         >
                           Hapus
-                        </button>
+                        </Button>
                       </>
                     )}
                   </td>
@@ -118,13 +119,14 @@ export default function Index(
 
 function StatusBadge({ status }: { status: string }) {
   const map: any = {
-    BELUM_DIBAYAR: 'bg-yellow-100 text-yellow-800',
+    BELUM_DIBAYAR: 'bg-red-100 text-red-800',
     SUDAH_DIBAYAR: 'bg-green-100 text-green-800',
+    BELUM_DIBAYAR_SEPENUHNYA: 'bg-yellow-100 text-yellow-800',
   }
 
   return (
     <span className={`px-2 py-1 rounded text-xs ${map[status]}`}>
-      {status.replace('_', ' ')}
+      {status.replace(/_/, ' ')}
     </span>
   )
 }

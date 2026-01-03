@@ -13,7 +13,7 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $payment = Payments::with('sale')
+        $payment = Payments::with('sales')
             ->when($request->from && $request->to, function ($q) use ($request) {
                 $q->whereBetween('payment_date', [$request->from, $request->to]);
             })
@@ -48,7 +48,7 @@ class PaymentController extends Controller
         DB::transaction(function () use ($request) {
             $sale = Sales::findOrFail($request->sale_id);
 
-            $totalPaid = $sale->payment()->sum('amount');
+            $totalPaid = $sale->payments()->sum('amount');
 
             if ($totalPaid + $request->amount > $sale->total_amount) {
                 abort(422, 'Pembayaran melebihi total penjualan');
@@ -64,12 +64,12 @@ class PaymentController extends Controller
             $this->updateSaleStatus($sale);
         });
 
-        return redirect()->route('payment.index')->with('success', 'Pembayaran berhasil');
+        return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil');
     }
 
     public function show(Payments $payment)
     {
-        $payment->load('sale');
+        $payment->load('sales');
 
         return Inertia::render('payments/show', [
             'payment' => $payment
@@ -93,7 +93,7 @@ class PaymentController extends Controller
         DB::transaction(function () use ($request, $payment) {
             $sale = $payment->sale;
 
-            $otherPayment = $sale->payment()
+            $otherPayment = $sale->payments()
             ->where('id', '!=', $payment->id)
             ->sum('amount');
 
@@ -109,7 +109,7 @@ class PaymentController extends Controller
             $this->updateSaleStatus($sale);
         });
 
-        return redirect()->route('payment.index')->with('success', 'Pembayaran berhasil di-update');
+        return redirect()->route('payments.index')->with('success', 'Pembayaran berhasil di-update');
     }
 
     public function destroy(Payments $payment)

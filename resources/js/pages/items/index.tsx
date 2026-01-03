@@ -38,14 +38,14 @@ export default function Index(
             </thead>
             <tbody>
               {paginated.data.map((item: Item) => (
-                <tr key={item.id}>
-                  <td>{item.code}</td>
-                  <td>{item.name}</td>
-                  <td>Rp {item.price.toLocaleString()}</td>
-                  <td className="space-x-2">
+                <tr key={item.id} className="border-t">
+                  <td className="text-center">{item.code}</td>
+                  <td className="text-center">{item.name}</td>
+                  <td className="text-center">Rp {item.price.toLocaleString()}</td>
+                  <td className="space-x-2 text-center">
                     <Link
                       href={items.edit({ item: item.id }).url}
-                      className="btn"
+                      className="bg-sky-500 p-2 rounded-full text-white"
                     >
                       Edit
                     </Link>
@@ -56,7 +56,7 @@ export default function Index(
                           items.destroy({ item: item.id }).url
                         )
                       }
-                      className="btn-danger"
+                      className="bg-red-500 p-2 rounded-full text-white"
                     >
                       Hapus
                     </button>

@@ -31,7 +31,7 @@ export default function PaymentForm({
   const selectedSale = sales.find(s => s.id === Number(data.sale_id))
   const remaining =
     selectedSale
-      ? selectedSale.total_amount - selectedSale.total_paid
+      ? parseInt(selectedSale.total_amount.toString()) - (selectedSale.total_paid || 0)
       : 0
 
   return (

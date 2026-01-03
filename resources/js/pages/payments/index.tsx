@@ -45,7 +45,6 @@ export default function Index(
           </Button>
         </div>
 
-        {/* Filter */}
         <div className="flex gap-2 mb-4">
           <input
             type="date"
@@ -64,7 +63,6 @@ export default function Index(
           </Button>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto rounded border">
           <table className="w-full text-sm">
             <thead className="bg-muted">
@@ -93,8 +91,8 @@ export default function Index(
                   <td className="px-3 py-2 text-center">
                     {payment.payment_date}
                   </td>
-                  <td className="px-3 py-2">
-                    {payment.sale.code}
+                  <td className="px-3 py-2 text-center">
+                    {payment.sales.code}
                   </td>
                   <td className="px-3 py-2 text-right">
                     {payment.amount.toLocaleString('id-ID')}
