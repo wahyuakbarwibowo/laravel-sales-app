@@ -113,8 +113,8 @@ export default function Show(
 
         <div className="flex gap-2">
           <Link
-            href={sales.index().url}
-            className="btn"
+            href={sales.index()}
+            className="bg-black text-white rounded-full p-2"
           >
             Kembali
           </Link>
@@ -122,15 +122,15 @@ export default function Show(
           {sale.status !== 'SUDAH_DIBAYAR' && (
             <>
               <Link
-                href={sales.edit({ params: { sale: sale.id } }).url}
-                className="btn"
+                href={sales.edit({ sale: sale.id })}
+                className="bg-black text-white rounded-full p-2"
               >
                 Edit
               </Link>
 
               <Link
-                href={payments.create({ query: { sale_id: sale.id } }).url}
-                className="btn-primary"
+                href={payments.create({ query: { sale_id: sale.id } })}
+                className="bg-black text-white rounded-full p-2"
               >
                 Bayar
               </Link>

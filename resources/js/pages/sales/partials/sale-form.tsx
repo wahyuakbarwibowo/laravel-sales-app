@@ -51,16 +51,16 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
     setData('items', data.items.filter((_: any, i: number) => i !== index))
   }
 
-  const grandTotal = data.items.reduce((t, i) => t + i.total_price, 0)
+  const grandTotal = data.items.reduce((t, i) => t + parseInt(i.total_price), 0)
 
   return (
     <div className="space-y-6">
       <div className="">
-        <Label htmlFor="sale_date">
+        <Label className="mr-2" htmlFor="sale_date">
           Tanggal Penjualan
         </Label>
-        <Input
-        id="sale_date"
+        <input
+          id="sale_date"
           type="date"
           className="input"
           value={data.sale_date}

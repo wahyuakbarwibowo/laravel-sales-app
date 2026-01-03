@@ -22,6 +22,6 @@ class Items extends Model
 
     public function saleItems()
     {
-        return $this->hasMany(SaleItems::class);
+        return $this->hasMany(SaleItems::class, 'item_id');
     }
 }

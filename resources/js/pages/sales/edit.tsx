@@ -23,7 +23,7 @@ export default function Edit({ sale, items }: PageProps<{ sale: Sale; items: Ite
         <SaleForm
           sale={sale}
           items={items}
-          submitUrl={sales.update({ params: { sale: sale.id } }).url}
+          submitUrl={sales.update({ sale: sale.id }).url}
           method="put"
         />
       </div>

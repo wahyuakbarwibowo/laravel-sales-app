@@ -82,7 +82,7 @@ export default function Index(
                   </td>
                   <td className="text-right space-x-2">
                     <Link
-                      href={salesRoute.show({ params: { sale: sale.id } }).url}
+                      href={salesRoute.show({ sale: sale.id }).url}
                       className="btn"
                     >
                       Detail
@@ -91,7 +91,7 @@ export default function Index(
                     {sale.status === 'BELUM_DIBAYAR' && (
                       <>
                         <Link
-                          href={salesRoute.edit({ params: { sale: sale.id } }).url}
+                          href={salesRoute.edit({ sale: sale.id }).url}
                           className="btn"
                         >
                           Edit

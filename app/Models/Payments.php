@@ -22,7 +22,7 @@ class Payments extends Model
 
     public function sales()
     {
-        return $this->belongsTo(Sales::class);
+        return $this->belongsTo(Sales::class, 'sale_id');
     }
 
     public static function generateCode()

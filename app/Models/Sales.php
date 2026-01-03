@@ -26,17 +26,17 @@ class Sales extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function items()
     {
-        return $this->hasMany(SaleItems::class);
+        return $this->hasMany(SaleItems::class, 'sale_id');
     }
 
     public function payments()
     {
-        return $this->hasMany(Payments::class);
+        return $this->hasMany(Payments::class, 'sale_id');
     }
 
     public function getTotalPaidAttribute()
