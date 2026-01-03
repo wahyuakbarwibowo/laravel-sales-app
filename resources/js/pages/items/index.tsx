@@ -21,7 +21,7 @@ export default function Index(
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Master Item</h1>
 
-          <Link href={items.create().url} className="btn-primary">
+          <Link href={items.create().url} className="p-2 rounded-full bg-black text-white">
             + Tambah Item
           </Link>
         </div>

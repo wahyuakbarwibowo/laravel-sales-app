@@ -1,4 +1,7 @@
-import { useForm } from '@inertiajs/react'
+import { Form, useForm } from '@inertiajs/react'
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import InputError from "../../../components/input-error"
 
 export default function ItemForm(
   { item, submitUrl, method = 'post' }: any
@@ -9,11 +12,12 @@ export default function ItemForm(
     price: item?.price ?? 0,
     image: null,
   })
+  console.log(item, submitUrl, method)
 
   const submit = () => {
     method === 'post'
-      ? post(submitUrl)
-      : put(submitUrl)
+      ? post(submitUrl, { forceFormData: true })
+      : put(submitUrl, { forceFormData: true })
   }
 
   return (
@@ -24,36 +28,48 @@ export default function ItemForm(
       }}
       className="space-y-4"
     >
-      <input
+      <Input
         value={data.code}
         onChange={e => setData('code', e.target.value)}
         placeholder="Kode"
         className="input"
       />
+      <InputError
+        message={errors.code}
+      />
 
-      <input
+      <Input
         value={data.name}
         onChange={e => setData('name', e.target.value)}
         placeholder="Nama"
         className="input"
       />
+      <InputError
+        message={errors.name}
+      />
 
-      <input
+      <Input
         type="number"
         value={data.price}
         onChange={e => setData('price', Number(e.target.value))}
         placeholder="Harga"
         className="input"
       />
+      <InputError
+        message={errors.price}
+      />
 
-      <input
+      <Input
         type="file"
         onChange={e => setData('image', e.target.files?.[0])}
       />
+      <InputError
+        message={errors.image}
+      />
 
-      <button disabled={processing} className="btn-primary">
+      <Button disabled={processing} className="btn-primary" type="submit">
         Simpan
-      </button>
+      </Button>
     </form>
   )
 }

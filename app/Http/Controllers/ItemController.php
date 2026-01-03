@@ -44,7 +44,7 @@ class ItemController extends Controller
 
         Items::create($data);
 
-        return redirect()->route('master.items.index');
+        return redirect()->route('master.items.index')->with('success', 'Item berhasil dibuat');
     }
 
     /**

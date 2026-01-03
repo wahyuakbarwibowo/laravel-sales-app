@@ -69,7 +69,6 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
         <InputError
           message={errors.sale_date}
         />
-        {errors.sale_date && <p className="text-red-500">{errors.sale_date}</p>}
       </div>
 
       <table className="w-full border">
