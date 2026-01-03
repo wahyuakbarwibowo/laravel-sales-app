@@ -45,7 +45,7 @@ export default function Index(
                   <td className="space-x-2 text-center">
                     <Link
                       href={items.edit({ item: item.id }).url}
-                      className="bg-sky-500 p-2 rounded-full text-white"
+                      className="text-amber-600 hover:underline"
                     >
                       Edit
                     </Link>
@@ -56,7 +56,7 @@ export default function Index(
                           items.destroy({ item: item.id }).url
                         )
                       }
-                      className="bg-red-500 p-2 rounded-full text-white"
+                      className="text-red-600 hover:underline"
                     >
                       Hapus
                     </button>

@@ -13,11 +13,12 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Apple, BookOpen, DollarSign, Folder, LayoutGrid, ShoppingBag } from 'lucide-react';
+import { Apple, BookOpen, DollarSign, Folder, LayoutGrid, PersonStanding, ShoppingBag } from 'lucide-react';
 import AppLogo from './app-logo';
 import sales from "@/routes/sales";
 import payments from "@/routes/payments";
 import items from "@/routes/master/items";
+import users from "@/routes/master/users";
 
 const mainNavItems: NavItem[] = [
     {
@@ -34,6 +35,11 @@ const mainNavItems: NavItem[] = [
         title: 'Pembayaran',
         href: payments.index.url(),
         icon: DollarSign,
+    },
+    {
+        title: 'User',
+        href: users.index.url(),
+        icon: PersonStanding,
     },
     {
         title: 'Item',

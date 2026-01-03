@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('master')->name('master.')->group(function () {
         Route::resource('items', ItemController::class);
+        Route::resource('users', UserController::class);
     });
 });
 

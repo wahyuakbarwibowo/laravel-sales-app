@@ -50,12 +50,14 @@ export default function Index(
             />
           </div>
 
-          <Link
-            href={salesRoute.create().url}
-            className="btn-primary"
-          >
-            + Tambah Penjualan
-          </Link>
+          <Button asChild className="mb-4">
+            <Link
+              href={salesRoute.create().url}
+              className="btn-primary"
+            >
+              + Tambah Penjualan
+            </Link>
+          </Button>
         </div>
 
         <div className="card overflow-x-auto">
@@ -84,7 +86,7 @@ export default function Index(
                   <td className="text-center space-x-2">
                     <Link
                       href={salesRoute.show({ sale: sale.id }).url}
-                      className="bg-black p-1 text-white rounded-full"
+                      className="text-blue-600 hover:underline"
                     >
                       Detail
                     </Link>
@@ -93,14 +95,14 @@ export default function Index(
                       <>
                         <Link
                           href={salesRoute.edit({ sale: sale.id }).url}
-                          className="bg-black p-1 text-white rounded-full"
+                          className="text-amber-600 hover:underline"
                         >
                           Edit
                         </Link>
 
                         <Button
                           onClick={() => destroy(sale.id)}
-                          className="bg-black p-1 text-white rounded-full"
+                          className="text-red-600 hover:underline bg-white hover:bg-white"
                         >
                           Hapus
                         </Button>
