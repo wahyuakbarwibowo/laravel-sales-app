@@ -1,0 +1,124 @@
+import { PageProps, Payment } from '@/types'
+import { router } from '@inertiajs/react'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import * as paymentRoutes from '@/routes/payments'
+import AppLayout from "@/layouts/app-layout"
+
+const breadcrumbs: BreadcrumbItem[] = [
+  {
+    title: 'Penjualan',
+    href: paymentRoutes.index.url(),
+  },
+];
+
+export default function Index(
+  { payments, filters }: PageProps<{
+    payments: Payment[]
+    filters: {
+      start?: string
+      end?: string
+    }
+  }>
+) {
+  const [start, setStart] = useState(filters.start ?? '')
+  const [end, setEnd] = useState(filters.end ?? '')
+
+  const applyFilter = () => {
+    router.get(
+      paymentRoutes.index().url,
+      { start, end },
+      { preserveState: true }
+    )
+  }
+
+  return (
+    <AppLayout breadcrumbs={breadcrumbs}>
+      <div className="p-4 space-y-4">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-xl font-bold">Pembayaran</h1>
+
+          <Button asChild>
+            <a href={paymentRoutes.create.url()}>
+              + Tambah Pembayaran
+            </a>
+          </Button>
+        </div>
+
+        {/* Filter */}
+        <div className="flex gap-2 mb-4">
+          <input
+            type="date"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+            className="border rounded px-3 py-2"
+          />
+          <input
+            type="date"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+            className="border rounded px-3 py-2"
+          />
+          <Button onClick={applyFilter}>
+            Filter
+          </Button>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-x-auto rounded border">
+          <table className="w-full text-sm">
+            <thead className="bg-muted">
+              <tr>
+                <th className="px-3 py-2 text-left">Kode</th>
+                <th className="px-3 py-2">Tanggal</th>
+                <th className="px-3 py-2">Penjualan</th>
+                <th className="px-3 py-2 text-right">Jumlah</th>
+                <th className="px-3 py-2 text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {payments.total === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-3 py-4 text-center text-muted-foreground">
+                    Tidak ada data
+                  </td>
+                </tr>
+              )}
+
+              {payments.data.map(payment => (
+                <tr key={payment.id} className="border-t">
+                  <td className="px-3 py-2">
+                    {payment.code}
+                  </td>
+                  <td className="px-3 py-2 text-center">
+                    {payment.payment_date}
+                  </td>
+                  <td className="px-3 py-2">
+                    {payment.sale.code}
+                  </td>
+                  <td className="px-3 py-2 text-right">
+                    {payment.amount.toLocaleString('id-ID')}
+                  </td>
+                  <td className="px-3 py-2 text-center space-x-2">
+                    <a
+                      href={paymentRoutes.show({ payment: payment.id }).url}
+                      className="text-blue-600 hover:underline"
+                    >
+                      Detail
+                    </a>
+                    <a
+                      href={paymentRoutes.edit({ payment: payment.id }).url}
+                      className="text-amber-600 hover:underline"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div >
+      </div>
+    </AppLayout>
+  )
+}

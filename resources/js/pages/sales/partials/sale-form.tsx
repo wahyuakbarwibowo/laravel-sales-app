@@ -1,5 +1,9 @@
 import { Item, Sale, SaleItemForm } from "@/types";
 import { useForm } from "@inertiajs/react";
+import { Input } from "@/components/ui/input";
+import InputError from "@/components/input-error";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   items: Item[]
@@ -51,13 +55,19 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
 
   return (
     <div className="space-y-6">
-      <div>
-        <label>Tanggal Penjualan</label>
-        <input
+      <div className="">
+        <Label htmlFor="sale_date">
+          Tanggal Penjualan
+        </Label>
+        <Input
+        id="sale_date"
           type="date"
           className="input"
           value={data.sale_date}
           onChange={e => setData('sale_date', e.target.value)}
+        />
+        <InputError
+          message={errors.sale_date}
         />
         {errors.sale_date && <p className="text-red-500">{errors.sale_date}</p>}
       </div>
@@ -90,7 +100,7 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
               </td>
 
               <td>
-                <input
+                <Input
                   type="number"
                   min={1}
                   className="input"
@@ -100,7 +110,7 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
               </td>
 
               <td>
-                <input
+                <Input
                   type="number"
                   className="input"
                   value={row.price}
@@ -109,7 +119,7 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
               </td>
 
               <td>
-                <input
+                <Input
                   type="number"
                   className="input"
                   value={row.total_price}
@@ -119,9 +129,9 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
 
               <td>
                 {data.items.length > 1 && (
-                  <button type="button" onClick={() => removeRow(index)}>
+                  <Button type="button" onClick={() => removeRow(index)}>
                     ❌
-                  </button>
+                  </Button>
                 )}
               </td>
             </tr>
@@ -129,21 +139,21 @@ export default function SaleForm({ items, sale, submitUrl, method = 'post' }: Pr
         </tbody>
       </table>
 
-      <button onClick={() => addRow()}>
+      <Button onClick={() => addRow()}>
         + Tambah Item
-      </button>
+      </Button>
 
       <div className="text-right font-bold">
         Grand Total: Rp {grandTotal.toLocaleString()}
       </div>
 
-      <button
+      <Button
         onClick={submit}
         disabled={processing}
         className="btn-primary"
       >
         Simpan
-      </button>
+      </Button>
     </div>
 
 

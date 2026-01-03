@@ -20,15 +20,15 @@ class PaymentController extends Controller
             ->orderByDesc('payment_date')
             ->paginate(10);
 
-        return Inertia::render('payment/index', [
-            'payment' => $payment,
+        return Inertia::render('payments/index', [
+            'payments' => $payment,
             'filters' => $request->only('from', 'to'),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('payment/create', [
+        return Inertia::render('payments/create', [
             'sales' => Sales::whereIn('status', [
                 SaleStatus::BELUM_DIBAYAR,
                 SaleStatus::BELUM_DIBAYAR_SEPENUHNYA,
@@ -71,14 +71,14 @@ class PaymentController extends Controller
     {
         $payment->load('sale');
 
-        return Inertia::render('payment/show', [
+        return Inertia::render('payments/show', [
             'payment' => $payment
         ]);
     }
 
     public function edit(Payments $payment)
     {
-        return Inertia::render('payment/edit', [
+        return Inertia::render('payments/edit', [
             'payment' => $payment,
         ]);
     }

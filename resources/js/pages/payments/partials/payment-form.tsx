@@ -1,5 +1,9 @@
 import { SalePayment } from "@/types";
 import { useForm } from "@inertiajs/react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import InputError from "@/components/input-error";
 
 interface Props {
   sales?: SalePayment[]
@@ -33,7 +37,7 @@ export default function PaymentForm({
   return (
     <div className="space-y-6 max-w-lg">
       <div>
-        <label>Penjualan</label>
+        <Label className="mr-2">Penjualan</Label>
         <select
           className="input"
           value={data.sale_id}
@@ -47,23 +51,27 @@ export default function PaymentForm({
             </option>
           ))}
         </select>
-        {errors.sale_id && <p className="text-red-500">{errors.sale_id}</p>}
+        <InputError
+          message={errors.sale_id}
+        />
       </div>
 
       <div>
-        <label>Tanggal Pembayaran</label>
-        <input
+        <Label>Tanggal Pembayaran</Label>
+        <Input
           type="date"
           className="input"
           value={data.payment_date}
           onChange={e => setData('payment_date', e.target.value)}
         />
-        {errors.payment_date && <p className="text-red-500">{errors.payment_date}</p>}
+        <InputError
+          message={errors.payment_date}
+        />
       </div>
 
       <div>
-        <label>Nominal Pembayaran</label>
-        <input
+        <Label>Nominal Pembayaran</Label>
+        <Input
           type="number"
           min={1}
           max={remaining}
@@ -76,16 +84,18 @@ export default function PaymentForm({
             Sisa pembayaran: Rp {remaining.toLocaleString()}
           </p>
         )}
-        {errors.amount && <p className="text-red-500">{errors.amount}</p>}
+        <InputError
+          message={errors.amount}
+        />
       </div>
 
-      <button
+      <Button
         onClick={submit}
         disabled={processing}
         className="btn-primary"
       >
         Simpan Pembayaran
-      </button>
+      </Button>
     </div>
   )
 }
