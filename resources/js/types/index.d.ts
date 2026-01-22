@@ -63,7 +63,10 @@ export interface PageProps<T = object> extends Page<T> {
     items: Item[],
     sale: Sale,
     sales: SalePayment[],
-    payment: Payment
+    payment: Payment,
+    filters: T.filters,
+    widgets: T.widgets,
+    charts: T.charts,
 }
 
 export interface SaleItem {

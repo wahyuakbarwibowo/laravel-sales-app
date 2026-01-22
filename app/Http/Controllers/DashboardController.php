@@ -27,6 +27,7 @@ class DashboardController extends Controller
             SUM(total_amount) as total
         ")
             ->whereYear('sale_date', now()->year)
+            ->whereBetween('sale_date', [$from, $to])
             ->groupBy('month')
             ->orderBy('month')
             ->get();
@@ -36,6 +37,8 @@ class DashboardController extends Controller
             SUM(qty) as total_qty
         ")
             ->join('items', 'items.id', '=', 'sale_items.item_id')
+            ->join('sales', 'sales.id', '=', 'sale_items.sale_id')
+            ->whereBetween('sale_date', [$from, $to])
             ->groupBy('items.name')
             ->orderByDesc('total_qty')
             ->get();
