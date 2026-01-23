@@ -19,7 +19,8 @@ class SaleController extends Controller
                 $q->whereBetween('sale_date', [$request->from, $request->to]);
             })
             ->orderByDesc('sale_date')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('sales/index', [
             'sales' => $sales,

@@ -60,13 +60,14 @@ export interface PageProps<T = object> extends Page<T> {
     auth: {
         user: User
     },
-    items: Item[],
-    sale: Sale,
-    sales: SalePayment[],
-    payment: Payment,
+    // items: Item[],
+    // sale: Sale,
+    // sales: SalePayment[],
+    // payment: Payment,
     filters: T.filters,
     widgets: T.widgets,
     charts: T.charts,
+    sales: T.sales,
 }
 
 export interface SaleItem {
@@ -89,7 +90,8 @@ export interface SalePayment {
     code: string
     total_amount: number
     total_paid: number
-    status: string
+    status: string,
+    sale_date: string,
 }
 
 export interface Payment {
@@ -101,7 +103,13 @@ export interface Payment {
     sale: SalePayment
 }
 
+interface Links {
+    url: string
+    label: string
+    active: boolean
+}
+
 interface Pagination<T> {
-  data: T[]
-  links: any[]
+    data: T[]
+    links: Links[]
 }

@@ -1,4 +1,4 @@
-import { BreadcrumbItem, Pagination, Sale } from "@/types"
+import { BreadcrumbItem, Pagination, Sale, SalePayment } from "@/types"
 import AppLayout from '@/layouts/app-layout'
 import { PageProps } from '@/types'
 import { Link, router } from '@inertiajs/react'
@@ -73,7 +73,7 @@ export default function Index(
             </thead>
 
             <tbody>
-              {sales.data.map(sale => (
+              {sales.data.map((sale: SalePayment) => (
                 <tr key={sale.id} className="border-t">
                   <td className="text-center">{sale.code}</td>
                   <td className="text-center">{sale.sale_date}</td>
@@ -114,21 +114,47 @@ export default function Index(
             </tbody>
           </table>
         </div>
+
+        <div className="flex justify-center mt-4">
+          <nav className="flex gap-1">
+            {sales.links.map((link, index) => (
+              <button
+                key={index}
+                disabled={!link.url}
+                onClick={() => {
+                  if (link.url) {
+                    router.get(link.url, {}, { preserveState: true })
+                  }
+                }}
+                className={`
+                  px-3 py-1 border rounded
+                  ${link.active ? 'bg-blue-600 text-white' : 'bg-white'}
+                  ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}
+                `}
+                dangerouslySetInnerHTML={{ __html: link.label }}
+              />
+            ))}
+          </nav>
+        </div>
+
       </div>
     </AppLayout>
   )
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const map: any = {
+  const map: Record<string, string> = {
     BELUM_DIBAYAR: 'bg-red-100 text-red-800',
     SUDAH_DIBAYAR: 'bg-green-100 text-green-800',
     BELUM_DIBAYAR_SEPENUHNYA: 'bg-yellow-100 text-yellow-800',
   }
 
   return (
-    <span className={`px-2 py-1 rounded text-xs ${map[status]}`}>
-      {status.replace(/_/, ' ')}
+    <span
+      className={`px-2 py-1 rounded text-xs ${map[status] ?? 'bg-gray-100 text-gray-800'
+        }`}
+    >
+      {status.replace(/_/g, ' ')}
     </span>
   )
 }
@@ -137,6 +163,6 @@ const destroy = (id: number) => {
   if (!confirm('Hapus penjualan ini?')) return
 
   router.delete(
-    salesRoute.destroy({ params: { sale: id } }).url
+    salesRoute.destroy({ sale: id }).url
   )
 }
