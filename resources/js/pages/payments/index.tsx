@@ -1,4 +1,4 @@
-import { BreadcrumbItem, PageProps, Payment } from '@/types'
+import { BreadcrumbItem, Links, PageProps, Payment } from '@/types'
 import { router } from '@inertiajs/react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -83,7 +83,7 @@ export default function Index(
                 </tr>
               )}
 
-              {payments.data.map(payment => (
+              {payments.data.map((payment: Payment) => (
                 <tr key={payment.id} className="border-t">
                   <td className="px-3 py-2">
                     {payment.code}
@@ -128,7 +128,7 @@ export default function Index(
 
         <div className="flex justify-center mt-4">
           <nav className="flex gap-1">
-            {payments.links.map((link, index) => (
+            {payments.links.map((link: Links, index: string) => (
               <button
                 key={index}
                 disabled={!link.url}

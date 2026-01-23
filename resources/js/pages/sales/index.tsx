@@ -1,4 +1,4 @@
-import { BreadcrumbItem, Pagination, Sale, SalePayment } from "@/types"
+import { BreadcrumbItem, Links, Pagination, Sale, SalePayment } from "@/types"
 import AppLayout from '@/layouts/app-layout'
 import { PageProps } from '@/types'
 import { Link, router } from '@inertiajs/react'
@@ -120,7 +120,7 @@ export default function Index(
 
         <div className="flex justify-center mt-4">
           <nav className="flex gap-1">
-            {sales.links.map((link, index) => (
+            {sales.links.map((link: Links, index: string) => (
               <button
                 key={index}
                 disabled={!link.url}

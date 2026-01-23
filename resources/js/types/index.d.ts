@@ -101,6 +101,7 @@ export interface Payment {
     payment_date: string
     amount: number
     sale: SalePayment
+    sales: SalePayment
 }
 
 interface Links {
