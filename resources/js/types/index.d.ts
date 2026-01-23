@@ -68,6 +68,8 @@ export interface PageProps<T = object> extends Page<T> {
     widgets: T.widgets,
     charts: T.charts,
     sales: T.sales,
+    users: T.users,
+    items: T.items,
 }
 
 export interface SaleItem {
@@ -105,7 +107,7 @@ export interface Payment {
 }
 
 interface Links {
-    url: string
+    url: string | null
     label: string
     active: boolean
 }
@@ -113,4 +115,7 @@ interface Links {
 interface Pagination<T> {
     data: T[]
     links: Links[]
+    current_page: number
+    last_page: number
+    total: number
 }

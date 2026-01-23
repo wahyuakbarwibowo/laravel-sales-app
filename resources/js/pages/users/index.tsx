@@ -1,11 +1,11 @@
 import AppLayout from '@/layouts/app-layout'
-import { PageProps, User } from '@/types'
+import { Links, PageProps, Pagination, User } from '@/types'
 import { router } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
 import * as userRoutes from '@/routes/master/users'
 
 export default function Index(
-  { users }: PageProps<{ users: User[] }>
+  { users }: PageProps<{ users: Pagination<User> }>
 ) {
   console.log(users)
   return (
@@ -27,7 +27,7 @@ export default function Index(
               </tr>
             </thead>
             <tbody>
-              {users.map((user: any) => (
+              {users.data.map((user: User) => (
                 <tr key={user.id} className="border-t">
                   <td className="px-3 py-2 text-center">{user.name}</td>
                   <td className="px-3 py-2 text-center">{user.email}</td>
@@ -52,6 +52,27 @@ export default function Index(
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-center mt-4">
+          <nav className="flex gap-1">
+            {users.links.map((link: Links, index: string) => (
+              <button
+                key={index}
+                disabled={!link.url}
+                onClick={() => {
+                  if (link.url) {
+                    router.get(link.url, {}, { preserveState: true })
+                  }
+                }}
+                className={`
+                  px-3 py-1 border rounded
+                  ${link.active ? 'bg-blue-600 text-white' : 'bg-white'}
+                  ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}
+                `}
+                dangerouslySetInnerHTML={{ __html: link.label }}
+              />
+            ))}
+          </nav>
         </div>
       </div>
     </AppLayout>

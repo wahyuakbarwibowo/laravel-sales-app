@@ -13,7 +13,9 @@ class ItemController extends Controller
     public function index()
     {
         return inertia('items/index', [
-            'items' => Items::orderBy('name')->paginate(10),
+            'items' => Items::orderBy('name')
+                ->paginate(10)
+                ->withQueryString(),
         ]);
     }
 

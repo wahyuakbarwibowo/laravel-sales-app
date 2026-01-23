@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout'
 import { Link, router } from '@inertiajs/react'
-import { PageProps } from '@/types'
+import { Links, PageProps, Pagination } from '@/types'
 import items from "@/routes/master/items"
 
 
@@ -13,7 +13,7 @@ interface Item {
 }
 
 export default function Index(
-  { items: paginated }: PageProps<{ items: any }>
+  { items: paginated }: PageProps<{ items: Pagination<Item> }>
 ) {
   return (
     <AppLayout>
@@ -65,6 +65,27 @@ export default function Index(
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-center mt-4">
+          <nav className="flex gap-1">
+            {paginated.links.map((link: Links, index: string) => (
+              <button
+                key={index}
+                disabled={!link.url}
+                onClick={() => {
+                  if (link.url) {
+                    router.get(link.url, {}, { preserveState: true })
+                  }
+                }}
+                className={`
+                  px-3 py-1 border rounded
+                  ${link.active ? 'bg-black text-white' : 'bg-white'}
+                  ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}
+                `}
+                dangerouslySetInnerHTML={{ __html: link.label }}
+              />
+            ))}
+          </nav>
         </div>
       </div>
     </AppLayout>
