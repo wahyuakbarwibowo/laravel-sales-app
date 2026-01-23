@@ -18,7 +18,8 @@ class PaymentController extends Controller
                 $q->whereBetween('payment_date', [$request->from, $request->to]);
             })
             ->orderByDesc('payment_date')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('payments/index', [
             'payments' => $payment,
@@ -32,7 +33,7 @@ class PaymentController extends Controller
             'sales' => Sales::whereIn('status', [
                 SaleStatus::BELUM_DIBAYAR,
                 SaleStatus::BELUM_DIBAYAR_SEPENUHNYA,
-            ])->get(),
+            ])->orderByDesc('sale_date')->get(),
             'code' => Payments::generateCode(),
         ]);
     }
@@ -91,7 +92,7 @@ class PaymentController extends Controller
         ]);
 
         DB::transaction(function () use ($request, $payment) {
-            $sale = $payment->sale;
+            $sale = $payment->sales;
 
             $otherPayment = $sale->payments()
             ->where('id', '!=', $payment->id)
@@ -115,7 +116,7 @@ class PaymentController extends Controller
     public function destroy(Payments $payment)
     {
         DB::transaction(function () use ($payment) {
-            $sale = $payment->sale;
+            $sale = $payment->sales;
             $payment->delete();
 
             $this->updateSaleStatus($sale);

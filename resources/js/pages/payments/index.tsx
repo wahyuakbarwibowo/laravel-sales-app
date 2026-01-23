@@ -1,4 +1,4 @@
-import { PageProps, Payment } from '@/types'
+import { BreadcrumbItem, PageProps, Payment } from '@/types'
 import { router } from '@inertiajs/react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -95,7 +95,10 @@ export default function Index(
                     {payment.sales.code}
                   </td>
                   <td className="px-3 py-2 text-right">
-                    {payment.amount.toLocaleString('id-ID')}
+                    Rp. {new Intl.NumberFormat('id-ID', {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    }).format(payment.amount)}
                   </td>
                   <td className="px-3 py-2 text-center space-x-2">
                     <a
@@ -110,13 +113,51 @@ export default function Index(
                     >
                       Edit
                     </a>
+                    <Button
+                      onClick={() => destroy(payment.id)}
+                      className="text-red-600 hover:underline bg-white hover:bg-white p-0"
+                    >
+                      Hapus
+                    </Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div >
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <nav className="flex gap-1">
+            {payments.links.map((link, index) => (
+              <button
+                key={index}
+                disabled={!link.url}
+                onClick={() => {
+                  if (link.url) {
+                    router.get(link.url, {}, { preserveState: true })
+                  }
+                }}
+                className={`
+                  px-3 py-1 border rounded
+                  ${link.active ? 'bg-blue-600 text-white' : 'bg-white'}
+                  ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}
+                `}
+                dangerouslySetInnerHTML={{ __html: link.label }}
+              />
+            ))}
+          </nav>
+        </div>
+
       </div>
     </AppLayout>
+  )
+}
+
+const destroy = (id: number) => {
+  if (!confirm('Hapus pembayaran ini?')) return
+
+  router.delete(
+    paymentRoutes.destroy({ payment: id }).url,
+    { preserveScroll: true }
   )
 }

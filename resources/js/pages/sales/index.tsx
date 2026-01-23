@@ -78,7 +78,10 @@ export default function Index(
                   <td className="text-center">{sale.code}</td>
                   <td className="text-center">{sale.sale_date}</td>
                   <td className="text-center">
-                    Rp {sale.total_amount.toLocaleString()}
+                    Rp. {new Intl.NumberFormat('id-ID', {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    }).format(sale.total_amount)}
                   </td>
                   <td className="text-center">
                     <StatusBadge status={sale.status} />
@@ -102,7 +105,7 @@ export default function Index(
 
                         <Button
                           onClick={() => destroy(sale.id)}
-                          className="text-red-600 hover:underline bg-white hover:bg-white"
+                          className="text-red-600 hover:underline bg-white hover:bg-white p-0"
                         >
                           Hapus
                         </Button>
