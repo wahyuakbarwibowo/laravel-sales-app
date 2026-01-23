@@ -76,7 +76,13 @@ export default function Index(
               {sales.data.map((sale: SalePayment) => (
                 <tr key={sale.id} className="border-t">
                   <td className="text-center">{sale.code}</td>
-                  <td className="text-center">{sale.sale_date}</td>
+                  <td className="text-center">
+                    {new Date(sale.sale_date).toLocaleDateString("id-ID", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </td>
                   <td className="text-center">
                     Rp. {new Intl.NumberFormat('id-ID', {
                       minimumFractionDigits: 0,
